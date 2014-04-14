@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title></title>
+	<meta charset="UTF-8" />
+	<script src="vendor/jquery-1.8.2.min.js"></script>
+	<script src="NeuralNetwork/DrawNetwork.js"></script>
+	<script src="NeuralNetwork/NeuralNetwork.js"></script>
+	<script src="vendor/JSON/json2.js"></script>
+	<script src="vendor/JSON/cycle.js"></script>
+	<script type="text/javascript">
+	<![CDATA[
+		window.addEventListener("load", function() {
+			window.NN = new NeuralNetwork([4,5,3]);
+			$("#run").on("click", function(){
+				var patterns = [
+					[[0,0,0,0],[0,0,0]],
+					[[0,1,0,0],[0,0,1]],
+					[[0,0,0,1],[0,0,1]],
+					[[0,1,0,1],[0,1,0]],
+					[[1,0,0,0],[0,1,0]],
+					[[1,0,0,1],[0,1,1]],
+					[[0,0,1,0],[0,1,0]],
+					[[0,1,1,0],[0,1,1]],
+					[[1,0,1,0],[1,0,0]],
+					[[1,1,1,0],[1,0,1]],
+					[[1,1,1,1],[1,1,0]]
+				];
+				var trained = window.NN.trainAll(patterns, .001);
+				if(trained){
+					console.log("Trained");
+					for(var i = 0; i < patterns.length; i++){
+						console.log(window.NN.run(patterns[i][0]));
+					}
+					console.log(window.NN.run([1,0,1,1]));
+				}
+				renderNN(window.NN);
+			})
+		}, false);
+	]]>
+	</script>
+</head>
+<body>
+	<button id="run" type="button">Run</button>
+	<div id="pictureContainer"></div>
+</body>
+</html>
